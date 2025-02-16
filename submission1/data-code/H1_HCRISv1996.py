@@ -6,6 +6,7 @@
 ########################################################################################
 
 import pandas as pd
+import csv
 import warnings
 warnings.simplefilter('ignore')
 
@@ -33,7 +34,7 @@ hcris_vars = pd.DataFrame([
 # Pull relevant data: v1996 of HCRIS forms run through 2011 due to lags in processing and hospital fiscal years
 final_hcris_v1996 = None
 
-for year in range(1996, 1996):
+for year in range(1996, 1997):
     print('Processing year:', year)
     alpha_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_ALPHA.CSV"
     numeric_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_NMRC.CSV"
@@ -65,6 +66,8 @@ for year in range(1996, 1996):
         final_hcris_v1996 = final_reports
     else:
         final_hcris_v1996 = pd.concat([final_hcris_v1996, final_reports], ignore_index=True)
+
+
 
 # Save final dataset
 final_hcris_v1996.to_csv('submission1/data/output/HCRIS_1996.csv', index=False)
