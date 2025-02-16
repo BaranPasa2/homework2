@@ -37,13 +37,13 @@ hcris_vars_df = pd.DataFrame(hcris_vars, columns=["variable", "WKSHT_CD", "LINE_
 # Pull relevant data
 final_hcris_v2010 = pd.DataFrame()
 
-for year in range(2010, 2018):
+for year in range(2010, 2011):
     print(f"Processing year: {year}")
-    hcris_alpha = pd.read_csv(f"data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_ALPHA.CSV", 
+    hcris_alpha = pd.read_csv(f"submission1/data/input/HOSPFY{year}/HOSP_{year}_ALPHA.CSV", 
                               names=['RPT_REC_NUM','WKSHT_CD','LINE_NUM','CLMN_NUM','ITM_VAL_NUM'])
-    hcris_numeric = pd.read_csv(f"data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_NMRC.CSV", 
+    hcris_numeric = pd.read_csv(f"submission1/data/input/HOSPFY{year}/HOSP_{year}_NMRC.CSV", 
                                 names=['RPT_REC_NUM','WKSHT_CD','LINE_NUM','CLMN_NUM','ITM_VAL_NUM'])
-    hcris_report = pd.read_csv(f"data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_RPT.CSV", 
+    hcris_report = pd.read_csv(f"submission1/data/input/HOSPFY{year}/HOSP_{year}_RPT.CSV", 
                                names=['RPT_REC_NUM','PRVDR_CTRL_TYPE_CD','PRVDR_NUM','NPI','RPT_STUS_CD','FY_BGN_DT',
                                       'FY_END_DT','PROC_DT','INITL_RPT_SW','LAST_RPT_SW','TRNSMTL_NUM','FI_NUM',
                                       'ADR_VNDR_CD','FI_CREAT_DT','UTIL_CD','NPR_DT','SPEC_IND','FI_RCPT_DT'])
@@ -62,4 +62,4 @@ for year in range(2010, 2018):
     
     final_hcris_v2010 = pd.concat([final_hcris_v2010, final_reports], ignore_index=True)
 
-final_hcris_v2010.to_csv("data/output/HCRIS_v2010.csv", index=False)
+final_hcris_v2010.to_csv("submission1/data/output/HCRIS_v2010.csv", index=False)
