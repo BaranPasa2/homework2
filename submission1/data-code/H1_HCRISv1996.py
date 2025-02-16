@@ -33,11 +33,11 @@ hcris_vars = pd.DataFrame([
 # Pull relevant data: v1996 of HCRIS forms run through 2011 due to lags in processing and hospital fiscal years
 final_hcris_v1996 = None
 
-for year in range(1998, 2012):
+for year in range(1996, 1996):
     print('Processing year:', year)
-    alpha_path = f"data/input/HOSPFY1996/HOSP_{year}_ALPHA.CSV"
-    numeric_path = f"data/input/HOSPFY1996/HOSP_{year}_NMRC.CSV"
-    report_path = f"data/input/HOSPFY1996/HOSP{year}_RPT.CSV"
+    alpha_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_ALPHA.CSV"
+    numeric_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_NMRC.CSV"
+    report_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_RPT.CSV"
 
     HCRIS_alpha = pd.read_csv(alpha_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'])
     HCRIS_numeric = pd.read_csv(numeric_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'])
@@ -67,4 +67,4 @@ for year in range(1998, 2012):
         final_hcris_v1996 = pd.concat([final_hcris_v1996, final_reports], ignore_index=True)
 
 # Save final dataset
-final_hcris_v1996.to_csv('data/output/HCRIS_v1996.csv', index=False)
+final_hcris_v1996.to_csv('submission1/data/output/HCRIS_1996.csv', index=False)
