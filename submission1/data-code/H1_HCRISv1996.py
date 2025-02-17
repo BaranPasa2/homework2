@@ -40,13 +40,13 @@ for year in range(1996, 2012):
     numeric_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_NMRC.CSV"
     report_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_RPT.CSV"
 
-    HCRIS_alpha = pd.read_csv(alpha_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'])
-    HCRIS_numeric = pd.read_csv(numeric_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'])
+    HCRIS_alpha = pd.read_csv(alpha_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'], dtype=str)
+    HCRIS_numeric = pd.read_csv(numeric_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'], dtype=str)
     HCRIS_report = pd.read_csv(report_path, names=['RPT_REC_NUM', 'PRVDR_CTRL_TYPE_CD', 'PRVDR_NUM', 'NPI',
                                                    'RPT_STUS_CD', 'FY_BGN_DT', 'FY_END_DT', 'PROC_DT',
                                                    'INITL_RPT_SW', 'LAST_RPT_SW', 'TRNSMTL_NUM', 'FI_NUM',
                                                    'ADR_VNDR_CD', 'FI_CREAT_DT', 'UTIL_CD', 'NPR_DT',
-                                                   'SPEC_IND', 'FI_RCPT_DT'])
+                                                   'SPEC_IND', 'FI_RCPT_DT'], dtype=str)
     
     final_reports = HCRIS_report[['RPT_REC_NUM', 'PRVDR_NUM', 'NPI', 'FY_BGN_DT', 'FY_END_DT', 'PROC_DT',
                                   'FI_CREAT_DT', 'RPT_STUS_CD']]
