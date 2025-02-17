@@ -37,7 +37,7 @@ hcris_vars_df = pd.DataFrame(hcris_vars, columns=["variable", "WKSHT_CD", "LINE_
 # Pull relevant data
 final_hcris_v2010 = pd.DataFrame()
 
-for year in range(2010, 2011):
+for year in range(2010, 2018):
     print(f"Processing year: {year}")
     hcris_alpha = pd.read_csv(f"submission1/data/input/HOSPFY{year}/HOSP_{year}_ALPHA.CSV", 
                               names=['RPT_REC_NUM','WKSHT_CD','LINE_NUM','CLMN_NUM','ITM_VAL_NUM'])
