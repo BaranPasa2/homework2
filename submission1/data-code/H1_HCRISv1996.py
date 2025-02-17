@@ -36,9 +36,9 @@ final_hcris_v1996 = None
 
 for year in range(1996, 2012):
     print('Processing year:', year)
-    alpha_path = f"ssubmission1/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_ALPHA.CSV"
-    numeric_path = f"submission1/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_NMRC.CSV"
-    report_path = f"ssubmission1/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_RPT.CSV"
+    alpha_path = f"submission1/data/input/HCRIS_v1996/HospitalFY{year}/hosp_{year}_ALPHA.CSV"
+    numeric_path = f"submission1/data/input/HCRIS_v1996/HospitalFY{year}/hosp_{year}_NMRC.CSV"
+    report_path = f"submission1/data/input/HCRIS_v1996/HospitalFY{year}/hosp_{year}_RPT.CSV"
 
     HCRIS_alpha = pd.read_csv(alpha_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'], dtype=str)
     HCRIS_numeric = pd.read_csv(numeric_path, names=['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM'], dtype=str)
