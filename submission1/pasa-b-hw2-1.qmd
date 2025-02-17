@@ -1,0 +1,37 @@
+---
+title: "Homework 2 - Submission 1"
+subtitle: "ECON 470"
+author: "Baran Pasa"
+execute:
+  echo: false
+format:
+  pdf:
+    output-file: "pasa-b-hwk2-1"
+    output-exit: "pdf"
+    code-fold: true
+    highlight-style: github
+    include-in-header:
+      text: |
+        \addtokomafont{disposition}{\rmfamily}
+
+jupyter: python3
+
+---
+
+# Homework 2 Analysis 
+
+###### [Link to Github](https://github.com/BaranPasa2/homework2)
+
+### Part 0: Importing and cleaning the data
+
+Data was imported for just the years 1996 and 2010 in order to make sure that cleaning could be done in a managebale setting.
+
+TA Pablo Estrada's python code was used, and then modified to fit Baran's file structure.
+
+### Part 2: Summarize the data:
+
+First we createed a line graph showing how many hospitals filed more than one report in the same year:
+
+```python
+
+```
