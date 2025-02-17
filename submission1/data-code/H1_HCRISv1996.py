@@ -34,7 +34,7 @@ hcris_vars = pd.DataFrame([
 # Pull relevant data: v1996 of HCRIS forms run through 2011 due to lags in processing and hospital fiscal years
 final_hcris_v1996 = None
 
-for year in range(1996, 1997):
+for year in range(1996, 2012):
     print('Processing year:', year)
     alpha_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_ALPHA.CSV"
     numeric_path = f"submission1/data/input/HOSPFY{year}/HOSP_{year}_NMRC.CSV"
