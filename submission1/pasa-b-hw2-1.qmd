@@ -32,6 +32,10 @@ TA Pablo Estrada's python code was used, and then modified to fit Baran's file s
 
 First we createed a line graph showing how many hospitals filed more than one report in the same year:
 
-```python
-
+```{python}
+exec(open("summary-code/data_summary.py").read())
 ```
+
+As you can see, there are currently lots of issues with the graphs.
+
+Also, I am currently not able to get the right dataset for 2012 -- reminder to ask about this in class. 

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-HCRIS_data = pd.read_csv('submission1/data/output/HCRIS_Data.csv')
+HCRIS_data = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission1/data/output/HCRIS_Data.csv')
 
 # print(HCRIS_data['provider_number'].count())
 
@@ -75,11 +75,11 @@ upper_bound = Q3 + 1.5 * IQR
 filtered_df = df[(df["estimated_price"] >= lower_bound) & (df["estimated_price"] <= upper_bound)]
 
 # Step 3: Plot violin plot
-plt.figure(figsize=(12, 6))
-sns.violinplot(x=filtered_df[year_col], y=filtered_df["estimated_price"], inner="quartile", palette="pastel")
-plt.xlabel("Year")
-plt.ylabel("Estimated Price")
-plt.title("Distribution of Estimated Prices Per Year (Outliers Removed)")
-plt.xticks(rotation=45)
-plt.grid()
-plt.show()
+#plt.figure(figsize=(12, 6))
+##sns.violinplot(x=filtered_df[year_col], y=filtered_df["estimated_price"], inner="quartile", palette="pastel")
+#plt.xlabel("Year")
+#plt.ylabel("Estimated Price")
+#plt.title("Distribution of Estimated Prices Per Year (Outliers Removed)")
+#plt.xticks(rotation=45)
+#plt.grid()
+#plt.show()
