@@ -8,21 +8,22 @@ HCRIS_data = pd.read_csv('submission3/data/output/HCRIS_Data.csv')
 # print(HCRIS_data['provider_number'].count())
 
 
-# Point 1 -> Need to fix the scale (should never go above 300)
-HCRIS_data['fy_start'] = pd.to_datetime(HCRIS_data['fy_start'], errors ='coerce')
-HCRIS_data['year'] = HCRIS_data['fy_start'].dt.year
 
-hospital_report_counts = HCRIS_data.groupby(['year', 'provider_number']).size().reset_index(name='num_reports')
-hospitals_with_multiple_reports = hospital_report_counts[hospital_report_counts['num_reports'] > 1]
-hospital_counts_per_year = hospitals_with_multiple_reports.groupby('year')['provider_number'].nunique()
+HCRISS1996 = pd.read_csv("submission3/data/output/HCRIS_1996.csv")
+HCRISS2010 = pd.read_csv("submission3/data/output/HCRIS_v2010.csv")
+HCRIS_total = pd.concat([HCRISS1996, HCRISS2010], ignore_index=False)
 
-# Point 1 Graphs
-plt.figure(figsize=(10, 5))
-sns.lineplot(x='year', y=hospital_counts_per_year, data=hospital_counts_per_year, marker="o")
-plt.xlabel("Year")
-plt.ylabel("Number of Hospitals with Multiple Reports")
-plt.title("Hospitals Filing More Than One Report Per Year")
-plt.grid()
+hospital_charge_counts = HCRIS_total.groupby(['year', 'provider_number']).size().reset_index(name='charge_count')
+multiple_charges = hospital_charge_counts[hospital_charge_counts['charge_count'] > 1]
+hospitals_per_year = multiple_charges.groupby('year')['provider_number'].nunique().reset_index()
+
+# Plot the data
+plt.figure(figsize=(10, 6))
+plt.plot(hospitals_per_year['year'], hospitals_per_year['provider_number'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Number of Hospitals with Multiple Charges')
+plt.title('Hospitals with Multiple Charges Per Year')
+plt.grid(True)
 plt.show()
 
 # Point 2
