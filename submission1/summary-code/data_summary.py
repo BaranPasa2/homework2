@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -29,9 +29,13 @@ plt.grid()
 plt.show()
 
 # Point 3 - Getting a key error issue. 
+# Ensure no non-positive values before applying log
+HCRIS_data = HCRIS_data[HCRIS_data['tot_charges'] > 0]  # Remove non-positive values to prevent -inf or NaN
+HCRIS_data['log_charges'] = np.log(HCRIS_data['tot_charges'])
+HCRIS_data = HCRIS_data.replace([np.inf, -np.inf], np.nan).dropna(subset=['log_charges'])
 
 plt.figure(figsize=(12, 6))
-sns.violinplot(x=HCRIS_data['year'], y=HCRIS_data['tot_charges'], inner='quartile', palette='muted')
+sns.violinplot(x=HCRIS_data['year'], y=HCRIS_data['log_charges'], inner='quartile', palette='muted')
 plt.xlabel("Year")
 plt.ylabel("Total Charges")
 plt.title("Distribution of Total Charges per Year")
@@ -75,11 +79,11 @@ upper_bound = Q3 + 1.5 * IQR
 filtered_df = df[(df["estimated_price"] >= lower_bound) & (df["estimated_price"] <= upper_bound)]
 
 # Step 3: Plot violin plot
-#plt.figure(figsize=(12, 6))
-##sns.violinplot(x=filtered_df[year_col], y=filtered_df["estimated_price"], inner="quartile", palette="pastel")
-#plt.xlabel("Year")
-#plt.ylabel("Estimated Price")
-#plt.title("Distribution of Estimated Prices Per Year (Outliers Removed)")
-#plt.xticks(rotation=45)
-#plt.grid()
-#plt.show()
+plt.figure(figsize=(12, 6))
+sns.violinplot(x=filtered_df[year_col], y=filtered_df["estimated_price"], inner="quartile", palette="pastel")
+plt.xlabel("Year")
+plt.ylabel("Estimated Price")
+plt.title("Distribution of Estimated Prices Per Year (Outliers Removed)")
+plt.xticks(rotation=45)
+plt.grid()
+plt.show()
