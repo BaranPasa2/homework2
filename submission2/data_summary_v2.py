@@ -9,14 +9,11 @@ HCRIS_data = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~Cl
 # print(HCRIS_data['provider_number'].count())
 
 
-# Point 1
+# Point 1 -> Need to fix the scale (should never go above 300)
 hospital_reports = HCRIS_data.groupby(['year', 'provider_number']).size().reset_index(name='report_count')
 hospital_reports_multi = hospital_reports[hospital_reports['report_count'] > 0]
 hospital_reports_multi = hospital_reports_multi.groupby('year')['provider_number'].nunique().reset_index()
 
-# Point 2
-uniqueCodes = hospital_reports_multi['provider_number'].nunique()
-print(f"Total number of unique hospitals: {uniqueCodes}")
 
 
 # Point 1 Graphs
@@ -26,6 +23,16 @@ plt.xlabel("Year")
 plt.ylabel("Number of Hospitals with Multiple Reports")
 plt.title("Hospitals Filing More Than One Report Per Year")
 plt.grid()
+plt.show()
+
+# Point 2
+unique_hospitals_per_year = hospital_reports_multi.groupby('year')['provider_number'].unique()
+plt.figure(figsize=(10, 5))
+plt.plot(unique_hospitals_per_year.index, unique_hospitals_per_year.values, marker='o', linestyle='-')
+plt.xlabel("Year")
+plt.ylabel("Number of Unique Hospitals")
+plt.title("Number of Unique Hospitals Per Year")
+plt.grid(True)
 plt.show()
 
 # Point 3 - Getting a key error issue. 
