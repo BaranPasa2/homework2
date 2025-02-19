@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-HCRIS_data = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission1/data/output/HCRIS_Data.csv')
+HCRIS_data = pd.read_csv('submission3/data/output/HCRIS_Data.csv')
 #HCRIS_data = HCRIS_data[HCRIS_data['year'].isin([2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015])]
 # print(HCRIS_data['provider_number'].count())
 
@@ -13,13 +13,13 @@ HCRIS_data = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~Cl
 HCRIS_data['fy_start'] = pd.to_datetime(HCRIS_data['fy_start'], errors ='coerce')
 HCRIS_data['year'] = HCRIS_data['fy_start'].dt.year
 
-hospital_reports_multi = HCRIS_data.groupby(['year', 'provider_number']).size().reset_index(name='multiple_charges')
-hospital_reports_multi['multiple_charges'] = hospital_reports_multi['multiple_charges'] > 1 # print(hospital_reports_multi.head())
-
+hospital_report_counts = HCRIS_data.groupby(['year', 'provider_number']).size().reset_index(name='num_reports')
+hospitals_with_multiple_reports = hospital_report_counts[hospital_report_counts['num_reports'] > 1]
+hospital_counts_per_year = hospitals_with_multiple_reports.groupby('year')['provider_number'].nunique()
 
 # Point 1 Graphs
 plt.figure(figsize=(10, 5))
-sns.lineplot(x='year', y='provider_number', data=hospital_reports_multi, marker="o")
+sns.lineplot(x=hospital_counts_per_year.index, y=hospital_counts_per_year.values, data=hospital_counts_per_year, marker="o")
 plt.xlabel("Year")
 plt.ylabel("Number of Hospitals with Multiple Reports")
 plt.title("Hospitals Filing More Than One Report Per Year")

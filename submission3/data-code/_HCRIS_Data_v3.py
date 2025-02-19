@@ -15,8 +15,8 @@ exec(open('submission1/data-code/H2_HCRISv2010.py').read())
 
 
 # Read and combine data ---------------------------------------------------
-final_hcris_v1996 = pd.read_csv('submission1/data/output/HCRIS_1996.csv')
-final_hcris_v2010 = pd.read_csv('submission1/data/output/HCRIS_v2010.csv')
+final_hcris_v1996 = pd.read_csv('submission3/data/output/HCRIS_1996.csv')
+final_hcris_v2010 = pd.read_csv('submission3/data/output/HCRIS_v2010.csv')
 
 # Create missing variables for columns introduced in v2010
 final_hcris_v1996['hvbp_payment'] = np.nan
@@ -117,4 +117,4 @@ final_hcris_data = final_hcris_data.rename(columns={'fyear': 'year'}).sort_value
 
 
 # Save final data ---------------------------------------------------------
-final_hcris_data.to_csv('submission1/data/output/HCRIS_Data.csv', index=False)
+final_hcris_data.to_csv('submission3/data/output/HCRIS_Data.csv', index=False)
