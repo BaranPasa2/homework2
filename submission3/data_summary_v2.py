@@ -5,7 +5,6 @@ import seaborn as sns
 
 
 HCRIS_data = pd.read_csv('submission3/data/output/HCRIS_Data.csv')
-#HCRIS_data = HCRIS_data[HCRIS_data['year'].isin([2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015])]
 # print(HCRIS_data['provider_number'].count())
 
 
@@ -19,7 +18,7 @@ hospital_counts_per_year = hospitals_with_multiple_reports.groupby('year')['prov
 
 # Point 1 Graphs
 plt.figure(figsize=(10, 5))
-sns.lineplot(x=hospital_counts_per_year.index, y=hospital_counts_per_year.values, data=hospital_counts_per_year, marker="o")
+sns.lineplot(x='year', y=hospital_counts_per_year, data=hospital_counts_per_year, marker="o")
 plt.xlabel("Year")
 plt.ylabel("Number of Hospitals with Multiple Reports")
 plt.title("Hospitals Filing More Than One Report Per Year")

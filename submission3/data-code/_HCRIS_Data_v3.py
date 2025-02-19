@@ -9,8 +9,8 @@ import numpy as np
 
 
 # Call individual scripts -------------------------------------------------
-exec(open('submission1/data-code/H1_HCRISv1996.py').read())
-exec(open('submission1/data-code/H2_HCRISv2010.py').read())
+exec(open('submission3/data-code/H1_HCRISv1996_v3.py').read())
+exec(open('submission3/data-code/H2_HCRISv2010_v3.py').read())
 
 
 
