@@ -5,7 +5,7 @@ import seaborn as sns
 
 
 HCRIS_data = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission1/data/output/HCRIS_Data.csv')
-# HCRIS_data = HCRIS_data[HCRIS_data['year'].isin([2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015])]
+#HCRIS_data = HCRIS_data[HCRIS_data['year'].isin([2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015])]
 # print(HCRIS_data['provider_number'].count())
 
 
