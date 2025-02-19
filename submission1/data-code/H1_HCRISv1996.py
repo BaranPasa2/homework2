@@ -61,6 +61,9 @@ for year in range(1996, 2012):
                          (hcris_data['CLMN_NUM'] == row['CLMN_NUM'])][['RPT_REC_NUM', 'ITM_VAL_NUM']]
         val.columns = ['report', row['variable']]
         final_reports = final_reports.merge(val, on='report', how='left')
+        if row ['source'] == 'numeric':
+            final_reports[row['variable']]=final_reports[row['variable']].astype(float)
+
     
     if final_hcris_v1996 is None:
         final_hcris_v1996 = final_reports

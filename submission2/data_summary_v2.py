@@ -5,15 +5,16 @@ import seaborn as sns
 
 
 HCRIS_data = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission1/data/output/HCRIS_Data.csv')
-
+# HCRIS_data = HCRIS_data[HCRIS_data['year'].isin([2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015])]
 # print(HCRIS_data['provider_number'].count())
 
 
 # Point 1 -> Need to fix the scale (should never go above 300)
-hospital_reports = HCRIS_data.groupby(['year', 'provider_number']).size().reset_index(name='report_count')
-hospital_reports_multi = hospital_reports[hospital_reports['report_count'] > 0]
-hospital_reports_multi = hospital_reports_multi.groupby('year')['provider_number'].nunique().reset_index()
+HCRIS_data['fy_start'] = pd.to_datetime(HCRIS_data['fy_start'], errors ='coerce')
+HCRIS_data['year'] = HCRIS_data['fy_start'].dt.year
 
+hospital_reports_multi = HCRIS_data.groupby(['year', 'provider_number']).size().reset_index(name='multiple_charges')
+hospital_reports_multi['multiple_charges'] = hospital_reports_multi['multiple_charges'] > 1 # print(hospital_reports_multi.head())
 
 
 # Point 1 Graphs
@@ -26,6 +27,10 @@ plt.grid()
 plt.show()
 
 # Point 2
+hospital_reports = HCRIS_data.groupby(['year', 'provider_number']).size().reset_index(name='report_count')
+hospital_reports_multi = hospital_reports[hospital_reports['report_count'] > 0]
+hospital_reports_multi = hospital_reports_multi.groupby('year')['provider_number'].nunique().reset_index()
+
 unique_hospitals_per_year = hospital_reports_multi.groupby('year')['provider_number'].unique()
 plt.figure(figsize=(10, 5))
 plt.plot(unique_hospitals_per_year.index, unique_hospitals_per_year.values, marker='o', linestyle='-')
