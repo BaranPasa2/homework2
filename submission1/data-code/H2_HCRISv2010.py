@@ -59,6 +59,8 @@ for year in range(2010, 2018):
                          (hcris_data['CLMN_NUM'] == row['CLMN_NUM'])]
         val = val[['RPT_REC_NUM', 'ITM_VAL_NUM']].rename(columns={'RPT_REC_NUM': 'report', 'ITM_VAL_NUM': row['variable']})
         final_reports = final_reports.merge(val, on='report', how='left')
+        if row ['source'] == 'numeric':
+            final_reports[row['variable']]=final_reports[row['variable']].astype(float)
     
     final_hcris_v2010 = pd.concat([final_hcris_v2010, final_reports], ignore_index=True)
 
