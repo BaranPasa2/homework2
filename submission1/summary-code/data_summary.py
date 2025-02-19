@@ -48,7 +48,7 @@ plt.show()
 
 
 # Ensure correct column names (update if needed)
-df = HCRIS_data
+
 tot_discounts_col = "tot_discounts"
 tot_charges_col = "tot_charges"
 ip_charges_col = "ip_charges"
@@ -61,26 +61,34 @@ year_col = "year"
 
 
 # Step 1: Compute estimated price using the updated formula
-df["discount_factor"] = 1 - df[tot_discounts_col] / df[tot_charges_col]
-df["price_num"] = (df[ip_charges_col] + df[icu_charges_col] + df[ancillary_charges_col]) * df["discount_factor"] - df[tot_mcare_payment_col]
-df["price_denom"] = df[tot_discharges_col] - df[mcare_discharges_col]
+HCRIS_data["discount_factor"] = 1 - HCRIS_data[tot_discounts_col] / HCRIS_data[tot_charges_col]
+HCRIS_data["price_num"] = (HCRIS_data[ip_charges_col] + HCRIS_data[icu_charges_col] + HCRIS_data[ancillary_charges_col]) * HCRIS_data["discount_factor"] - HCRIS_data[tot_mcare_payment_col]
+HCRIS_data["price_denom"] = HCRIS_data[tot_discharges_col] - HCRIS_data[mcare_discharges_col]
 
 # Avoid division by zero
-df["estimated_price"] = df["price_num"] / df["price_denom"]
-df = df.replace([float('inf'), -float('inf')], None).dropna(subset=["estimated_price"])
+HCRIS_data["estimated_price"] = HCRIS_data["price_num"] / HCRIS_data["price_denom"]
+HCRIS_data = HCRIS_data.replace([float('inf'), -float('inf')], None).dropna(subset=["estimated_price"])
 
-# Step 2: Remove negative and extreme outliers using IQR
-Q1 = df["estimated_price"].quantile(0.25)
-Q3 = df["estimated_price"].quantile(0.75)
+HCRIS_data["estimated_price"] = pd.to_numeric(HCRIS_data["estimated_price"], errors="coerce")
+
+# Ensure year column is string (categorical)
+HCRIS_data[year_col] = HCRIS_data[year_col].astype(str)
+
+# Remove NaN or Inf values
+HCRIS_data = HCRIS_data.replace([np.inf, -np.inf], np.nan).dropna(subset=["estimated_price"])
+
+# Filter outliers
+Q1 = HCRIS_data["estimated_price"].quantile(0.25)
+Q3 = HCRIS_data["estimated_price"].quantile(0.75)
 IQR = Q3 - Q1
 lower_bound = Q1 - 1.5 * IQR
 upper_bound = Q3 + 1.5 * IQR
 
-filtered_df = df[(df["estimated_price"] >= lower_bound) & (df["estimated_price"] <= upper_bound)]
+HCRIS_data_filtered = HCRIS_data[(HCRIS_data["estimated_price"] >= lower_bound) & (HCRIS_data["estimated_price"] <= upper_bound)]
 
-# Step 3: Plot violin plot
+# Plot violin plot
 plt.figure(figsize=(12, 6))
-sns.violinplot(x=filtered_df[year_col], y=filtered_df["estimated_price"], inner="quartile", palette="pastel")
+sns.violinplot(x=HCRIS_data_filtered[year_col], y=HCRIS_data_filtered["estimated_price"], inner="quartile", palette="pastel")
 plt.xlabel("Year")
 plt.ylabel("Estimated Price")
 plt.title("Distribution of Estimated Prices Per Year (Outliers Removed)")
