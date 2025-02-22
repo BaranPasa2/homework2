@@ -1,0 +1,35 @@
+---
+title: "Homework 2 - Submission 3"
+subtitle: "ECON 470"
+author: "Baran Pasa"
+execute:
+  echo: false
+format:
+  pdf:
+    output-file: "pasa-b-hwk2-1"
+    output-exit: "pdf"
+    code-fold: true
+    highlight-style: github
+    include-in-header:
+      text: |
+        \addtokomafont{disposition}{\rmfamily}
+
+jupyter: python3
+
+---
+
+# Homework 2 Analysis 
+
+###### [Link to Github](https://github.com/BaranPasa2/homework2)
+
+### Part 0: Importing and cleaning the data
+
+The data was cleaned in order to make summarizing and analysis easier. My cleaning process relied heavily on the code kindly provided to us by our TA Pablo. Additinally, data was only used from 2008 to 2015 due to my computer's lack of power.
+
+### Part 1 Summarizing the Data
+The graphs below provide a small summary of the data.
+
+![Number of Hospitals with Multiple Charges](submission3/quartoImages/HospMultCharge.jpg)
+
+### Part 2: Estimating ATE
+
