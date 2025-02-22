@@ -4,7 +4,8 @@
 ## Date Edited:   1/31/2023
 ## Notes:         R file to read in HCRIS data (2010 version of forms)
 ########################################################################################
-
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate)
 
 ########################################################################################
 ## List variables and locations

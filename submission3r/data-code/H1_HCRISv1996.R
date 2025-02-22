@@ -4,8 +4,7 @@
 ## Date Edited:   1/22/2023
 ## Notes:         R file to read in HCRIS data (1996 version of forms)
 ########################################################################################
-
-
+## if(!require('readr')) install.packages("readr")
 ########################################################################################
 ## List variables and locations
 ## -- This code forms a data.frame and tibble that consists of each variable of interest

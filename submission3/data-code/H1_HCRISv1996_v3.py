@@ -28,7 +28,10 @@ hcris_vars = pd.DataFrame([
     ('city', 'S200000', '00101', '0100', 'alpha'),
     ('state', 'S200000', '00101', '0200', 'alpha'),
     ('zip', 'S200000', '00101', '0300', 'alpha'),
-    ('county', 'S200000', '00101', '0400', 'alpha')
+    ('county', 'S200000', '00101', '0400', 'alpha'),
+    ('hvbp_payment', 'E00A18A', '07093', '00100', 'numeric'),
+    ('hrrp_payment', 'E00A18A', '07094', '00100', 'numeric')
+
 ], columns=['variable', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'source'])
 
 # Pull relevant data: v1996 of HCRIS forms run through 2011 due to lags in processing and hospital fiscal years
