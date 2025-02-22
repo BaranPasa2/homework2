@@ -1,10 +1,3 @@
-########################################################################################
-## Author:        Pablo Estrada
-## Date Created:  2/03/2025
-## Date Edited:   2/03/2025
-## Notes:         Python file to read in HCRIS data (2010 version of forms)
-########################################################################################
-
 import pandas as pd
 import warnings
 warnings.simplefilter('ignore')
@@ -37,30 +30,38 @@ hcris_vars_df = pd.DataFrame(hcris_vars, columns=["variable", "WKSHT_CD", "LINE_
 # Pull relevant data
 final_hcris_v2010 = pd.DataFrame()
 
-for year in range(2010, 2018):
+for year in range(2010, 2015):
     print(f"Processing year: {year}")
-    hcris_alpha = pd.read_csv(f"submission3/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_ALPHA.CSV", 
-                              names=['RPT_REC_NUM','WKSHT_CD','LINE_NUM','CLMN_NUM','ITM_VAL_NUM'])
-    hcris_numeric = pd.read_csv(f"submission3/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_NMRC.CSV", 
-                                names=['RPT_REC_NUM','WKSHT_CD','LINE_NUM','CLMN_NUM','ITM_VAL_NUM'])
-    hcris_report = pd.read_csv(f"submission3/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_RPT.CSV", 
-                               names=['RPT_REC_NUM','PRVDR_CTRL_TYPE_CD','PRVDR_NUM','NPI','RPT_STUS_CD','FY_BGN_DT',
-                                      'FY_END_DT','PROC_DT','INITL_RPT_SW','LAST_RPT_SW','TRNSMTL_NUM','FI_NUM',
-                                      'ADR_VNDR_CD','FI_CREAT_DT','UTIL_CD','NPR_DT','SPEC_IND','FI_RCPT_DT'])
+    alpha_path = f"submission3/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_ALPHA.CSV"
+    numeric_path = f"submission3/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_NMRC.CSV"
+    report_path = f"submission3/data/input/HCRIS_v2010/HospitalFY{year}/hosp10_{year}_RPT.CSV"
+
+    col_names = ['RPT_REC_NUM', 'WKSHT_CD', 'LINE_NUM', 'CLMN_NUM', 'ITM_VAL_NUM']
+    hcris_alpha = pd.read_csv(alpha_path, names= col_names, dtype=str)
+    hcris_numeric = pd.read_csv(numeric_path, names=col_names, dtype=str)
+    hcris_report = pd.read_csv(report_path, names=['RPT_REC_NUM', 'PRVDR_CTRL_TYPE_CD', 'PRVDR_NUM', 'NPI',
+                                                   'RPT_STUS_CD', 'FY_BGN_DT', 'FY_END_DT', 'PROC_DT',
+                                                   'INITL_RPT_SW', 'LAST_RPT_SW', 'TRNSMTL_NUM', 'FI_NUM',
+                                                   'ADR_VNDR_CD', 'FI_CREAT_DT', 'UTIL_CD', 'NPR_DT',
+                                                   'SPEC_IND', 'FI_RCPT_DT'],dtype=str)
+
     
-    final_reports = hcris_report[['RPT_REC_NUM', 'PRVDR_NUM', 'NPI', 'FY_BGN_DT', 'FY_END_DT', 'PROC_DT', 'FI_CREAT_DT', 'RPT_STUS_CD']]
-    final_reports.columns = ['report', 'provider_number', 'npi', 'fy_start', 'fy_end', 'date_processed', 'date_created', 'status']
+    final_reports = hcris_report[['RPT_REC_NUM', 'PRVDR_NUM', 'NPI', 'FY_BGN_DT', 'FY_END_DT', 'PROC_DT',
+                                  'FI_CREAT_DT', 'RPT_STUS_CD']]
+    final_reports.columns = ['report', 'provider_number', 'npi', 'fy_start', 'fy_end', 'date_processed',
+                             'date_created', 'status']
     final_reports['year'] = year
     
     for _, row in hcris_vars_df.iterrows():
         hcris_data = hcris_numeric if row['source'] == 'numeric' else hcris_alpha
         val = hcris_data[(hcris_data['WKSHT_CD'] == row['WKSHT_CD']) & 
-                         (hcris_data['LINE_NUM'] == row['LINE_NUM']) & 
-                         (hcris_data['CLMN_NUM'] == row['CLMN_NUM'])]
+                     (hcris_data['LINE_NUM'] == row['LINE_NUM']) & 
+                     (hcris_data['CLMN_NUM'] == row['CLMN_NUM'])]
         val = val[['RPT_REC_NUM', 'ITM_VAL_NUM']].rename(columns={'RPT_REC_NUM': 'report', 'ITM_VAL_NUM': row['variable']})
+    
         final_reports = final_reports.merge(val, on='report', how='left')
-        if row ['source'] == 'numeric':
-            final_reports[row['variable']]=final_reports[row['variable']].astype(float)
+        if row['source'] == 'numeric':
+            final_reports[row['variable']] = final_reports[row['variable']].astype(float)
     
     final_hcris_v2010 = pd.concat([final_hcris_v2010, final_reports], ignore_index=True)
 

@@ -9,7 +9,7 @@ HCRIS_data = pd.read_csv('submission3/data/output/HCRIS_Data.csv')
 
 
 
-HCRISS1996 = pd.read_csv("submission3/data/output/HCRIS_1996.csv")
+HCRISS1996 = pd.read_csv("submission3/data/output/HCRIS_v1996.csv")
 HCRISS2010 = pd.read_csv("submission3/data/output/HCRIS_v2010.csv")
 HCRIS_total = pd.concat([HCRISS1996, HCRISS2010], ignore_index=False)
 

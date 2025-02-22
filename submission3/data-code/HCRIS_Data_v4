@@ -1,21 +1,8 @@
-# Meta --------------------------------------------------------------------
-# Author:        Pablo Estrada - Modified by Baran Pasa to fit file paths
-# Date Created:  2/03/2025
-# Date Edited:   2/03/2025
-# Notes:         Python file to build HCRIS data for Econ/HLTH 470 Hwk 2
-
 import pandas as pd
 import numpy as np
 
-
-# Call individual scripts -------------------------------------------------
-exec(open('submission3/data-code/H1_HCRISv1996_v3.py').read())
-exec(open('submission3/data-code/H2_HCRISv2010_v3.py').read())
-
-
-
 # Read and combine data ---------------------------------------------------
-final_hcris_v1996 = pd.read_csv('submission3/data/output/HCRIS_1996.csv')
+final_hcris_v1996 = pd.read_csv('submission3/data/output/HCRIS_v1996.csv')
 final_hcris_v2010 = pd.read_csv('submission3/data/output/HCRIS_v2010.csv')
 
 # Create missing variables for columns introduced in v2010
@@ -35,9 +22,9 @@ final_hcris['hrrp_payment'] = final_hcris['hrrp_payment'].abs()
 
 # Extract fiscal year and sort
 final_hcris['fyear'] = final_hcris['fy_end'].dt.year
-final_hcris = final_hcris.sort_values(by=['provider_number', 'fyear']).drop(columns=['year'], errors='ignore')
+final_hcris = final_hcris.sort_values(by=['provider_number', 'fyear'])
 
-# Count hospitals per year
+# Count hospitals per yearX
 hospital_counts = final_hcris.groupby('fyear').size()
 
 
@@ -112,8 +99,12 @@ unique_hcris4['source'] = 'weighted_average'
 
 # Combine final datasets
 final_hcris_data = pd.concat([unique_hcris1, unique_hcris2, unique_hcris3, unique_hcris4])
-final_hcris_data = final_hcris_data.rename(columns={'fyear': 'year'}).sort_values(by=['provider_number', 'year'])
+# Drop duplicate 'year' columns if they exist
+final_hcris_data = final_hcris_data.loc[:, ~final_hcris_data.columns.duplicated()]
 
+# Only rename if 'year' does not exist
+if 'year' not in final_hcris_data.columns:
+    final_hcris_data = final_hcris_data.rename(columns={'fyear': 'year'}).sort_values(by=['provider_number', 'year'])
 
 
 # Save final data ---------------------------------------------------------
