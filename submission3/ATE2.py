@@ -6,9 +6,9 @@ from causalinference import CausalModel
 import markdown
 import pandas as pd
 import numpy as np
+from IPython.display import display, Markdown
 
-
-HCRIS = pd.read_csv('submission3/data/output/HCRIS_Data.csv')
+HCRIS = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission3/data/output/HCRIS_Data.csv')
 #from data_summary_v3 import HCRIS_data_filtered as HCRIS_data
 
 hcris_2012 = HCRIS[HCRIS['year'] == 2012]
@@ -56,8 +56,8 @@ for i in range(1, 5):
     control_mean = hcris_2012.loc[(hcris_2012[f'quartile_{i}'] == 1) & (hcris_2012['penalty'] == 0), 'price'].mean()
     Avg_per_group.append({'Quartile': i, 'Penalized_Mean_Price': round(treated_mean, 2), 'Non_penalized_Mean_Price': round(control_mean, 2)})
 
-results_df = pd.DataFrame(Avg_per_group)
-print(results_df.to_string(index=False))
+bed_quart_table = pd.DataFrame(Avg_per_group)
+print(bed_quart_table.to_string(index=False))
 
 # Q 7
 hcris_2012['bed_quartile'] = pd.qcut(hcris_2012['beds'], 4, labels=False)
@@ -77,6 +77,9 @@ inv_se = cm.estimates['matching']['ate_se']
 results.loc['ATE', 'INV'] = inv_ate
 results.loc['SE', 'INV'] = inv_se
 
+cm.est_via_matching(weights='maha', matches=1, bias_adj=True)
+results.loc['ATE', 'MAH'] = cm.estimates['matching']['ate'] 
+results.loc['SE', 'MAH'] = cm.estimates['matching']['ate_se']
 
 cm.est_propensity()
 cm.est_via_weighting()
@@ -89,3 +92,4 @@ results.loc['SE', 'OLS'] = cm.estimates['ols']['ate_se']
 
 results = results.astype(float).round(2)
 print(results)
+#display(Markdown(results.to_markdown()))

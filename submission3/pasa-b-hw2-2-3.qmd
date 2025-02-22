@@ -28,8 +28,25 @@ The data was cleaned in order to make summarizing and analysis easier. My cleani
 
 ### Part 1 Summarizing the Data
 The graphs below provide a small summary of the data.
+```{python}
+exec(open("/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission3/data_summary_v3.py").read())
+```
 
-![Number of Hospitals with Multiple Charges](submission3/quartoImages/HospMultCharge.jpg)
+As you can see, only the years 2008 through 2014 are visible. You can also see that there is distribution of NaN on the final graph. This is an issue that needs to be furhter addressed, and is most likely occuring to due to faulty code. 
+
+
+
 
 ### Part 2: Estimating ATE
 
+```{python}
+#| echo: false
+
+from ATE2 import results
+from IPython.display import display, Markdown
+
+print(results.head())
+```
+
+
+display(Markdown(results.to_markdown()))

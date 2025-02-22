@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-HCRIS_data = pd.read_csv('submission3/data/output/HCRIS_Data.csv')
+HCRIS_data = pd.read_csv('/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission3/data/output/HCRIS_Data.csv')
 # print(HCRIS_data['provider_number'].count())
 
 
 
-HCRISS1996 = pd.read_csv("submission3/data/output/HCRIS_v1996.csv")
-HCRISS2010 = pd.read_csv("submission3/data/output/HCRIS_v2010.csv")
+HCRISS1996 = pd.read_csv("/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission3/data/output/HCRIS_v1996.csv")
+HCRISS2010 = pd.read_csv("/Users/baranpasa/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Emory/Junior Year/Junior Spring/ECON 470/ECON 470 Python /homework2/submission3/data/output/HCRIS_v2010.csv")
 HCRIS_total = pd.concat([HCRISS1996, HCRISS2010], ignore_index=False)
 
 hospital_charge_counts = HCRIS_total.groupby(['year', 'provider_number']).size().reset_index(name='charge_count')
