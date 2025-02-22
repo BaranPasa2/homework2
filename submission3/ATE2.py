@@ -68,28 +68,28 @@ Y = hcris_2012['price'].values
 D = hcris_2012['penalty'].values
 X = bed_quart_dummies.values
 
-results = pd.DataFrame(index=['ATE', 'SE'], columns=['INV', 'MAH', 'IPW', 'OLS'])
+reg_results = pd.DataFrame(index=['ATE', 'SE'], columns=['INV', 'MAH', 'IPW', 'OLS'])
 cm = CausalModel(Y=Y, D=D, X=X)
 
 cm.est_via_matching(weights='inv', matches=1, bias_adj=True)
 inv_ate = cm.estimates['matching']['ate']
 inv_se = cm.estimates['matching']['ate_se']
-results.loc['ATE', 'INV'] = inv_ate
-results.loc['SE', 'INV'] = inv_se
+reg_results.loc['ATE', 'INV'] = inv_ate
+reg_results.loc['SE', 'INV'] = inv_se
 
 cm.est_via_matching(weights='maha', matches=1, bias_adj=True)
-results.loc['ATE', 'MAH'] = cm.estimates['matching']['ate'] 
-results.loc['SE', 'MAH'] = cm.estimates['matching']['ate_se']
+reg_results.loc['ATE', 'MAH'] = cm.estimates['matching']['ate'] 
+reg_results.loc['SE', 'MAH'] = cm.estimates['matching']['ate_se']
 
 cm.est_propensity()
 cm.est_via_weighting()
-results.loc['ATE', 'IPW'] = cm.estimates['weighting']['ate']
-results.loc['SE', 'IPW'] = cm.estimates['weighting']['ate_se']
+reg_results.loc['ATE', 'IPW'] = cm.estimates['weighting']['ate']
+reg_results.loc['SE', 'IPW'] = cm.estimates['weighting']['ate_se']
 
 cm.est_via_ols(adj=2)
-results.loc['ATE', 'OLS'] = cm.estimates['ols']['ate']
-results.loc['SE', 'OLS'] = cm.estimates['ols']['ate_se']
+reg_results.loc['ATE', 'OLS'] = cm.estimates['ols']['ate']
+reg_results.loc['SE', 'OLS'] = cm.estimates['ols']['ate_se']
 
-results = results.astype(float).round(2)
-print(results)
-#display(Markdown(results.to_markdown()))
+reg_results = reg_results.astype(float).round(2)
+#print(reg_results)
+display(Markdown(reg_results.to_markdown()))
